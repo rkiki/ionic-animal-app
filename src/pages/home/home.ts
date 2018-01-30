@@ -73,7 +73,7 @@ export class HomePage {
     }
   ];
 
-  private currentPosition : number;
+  private currentAnimal;
   public result : string;
   public showReorder = false;
 
@@ -83,16 +83,17 @@ export class HomePage {
 
   // CHOIX ALEATOIRE D'UN ANIMAL
 
-  pickAnimalPosition(){
+  pickAnimal(){
     let pos;
-    if(! this.currentPosition){
+    let animal;
+    if(! this.currentAnimal){
       pos = Math.floor(Math.random() * this.animals.length);
-
+      animal = this.animals[pos];
     }else {
-      pos = this.currentPosition;
+      animal = this.currentAnimal;
     }
      
-    return pos;
+    return animal;
   }
 
   // lECTURE D'UN SON
@@ -100,13 +101,13 @@ export class HomePage {
 
     this.result= "";
     // CHOIX D'un son
-    this.currentPosition = this.pickAnimalPosition();
-    let choosenAnimal = this.animals[this.currentPosition];
+    this.currentAnimal = this.pickAnimal();
+    
 
     // charger le son avec la variable Audio
 
     let audio = new Audio();
-    audio.src = 'assets' + choosenAnimal.file;
+    audio.src = 'assets' + this.currentAnimal.file;
     audio.load();
 
     // lecture du son
@@ -114,14 +115,14 @@ export class HomePage {
 
   }
   // Deviner l'animal en fonction de son cri
-guess(pos){
+guess(animalName){
   // est ce que l'on a joué un son
-  if(this.currentPosition){
+  if(this.currentAnimal){
     //est ce que l'on a choisit le bon animal
-    if(pos== this.currentPosition){
+    if(animalName == this.currentAnimal.title){
       this.result = "Gagné !!";
       // On réinitialise le choix pour faire un nouveau jeu
-      this.currentPosition= null;
+      this.currentAnimal= null;
     }else {
       this.result= "Essaie encore !!";
   
