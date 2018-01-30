@@ -73,6 +73,8 @@ export class HomePage {
     }
   ];
 
+  private currentPosition : number;
+
   constructor(public navCtrl: NavController) {
 
   }
@@ -80,9 +82,32 @@ export class HomePage {
   // CHOIX ALEATOIRE D'UN ANIMAL
 
   pickAnimalPosition(){
+    let pos;
+    if(! this.currentPosition){
+      pos = Math.floor(Math.random() * this.animals.length);
 
-    let pos = Math.floor(Math.random() * this.animals.length);
+    }else {
+      pos = this.currentPosition;
+    }
+     
     return pos;
+  }
+
+  // lECTURE D'UN SON
+  playSound(){
+    // CHOIX D'un son
+    this.currentPosition = this.pickAnimalPosition();
+    let choosenAnimal = this.animals[this.currentPosition];
+
+    // charger le son avec la variable Audio
+
+    let audio = new Audio();
+    audio.src = 'assets' + choosenAnimal.file;
+    audio.load();
+
+    // lecture du son
+    audio.play();
+
   }
 
 }
